@@ -79,6 +79,7 @@ const loginUser = async(req, res)=>{
             if (verifyPassword) {
                 const tokenData = await genToken(userData._id)
                 const responseData = {
+                    id:userData._id,
                     name: userData.name,
                     password: userData.password,
                     email: userData.email,
@@ -101,7 +102,7 @@ const loginUser = async(req, res)=>{
                 })
             }
         } else {
-            res.status(200).json({
+            res.status(400).json({
                 success: false,
                 message: "Invalid Email Address"
             })
@@ -130,6 +131,60 @@ try {
     
 }
 }
+// controller for update user password
+const updatePassword = async(req, res)=>{
+try {
+    const {userId, oldPassword, newPassword} = req.body;
+    console.log("from req.body",userId)
+
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Old and new passwords are required",
+      });
+    }
+    if(oldPassword === newPassword){
+        return res.status(400).json({
+            success: false,
+            message:"New Passowrd must be change"
+        })
+    }
+
+    const user = await User.findOne({_id:userId});
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Old password is incorrect",
+      });
+    }
+
+    const hashedNewPassword = await genHashPassword(newPassword);
+    await User.findByIdAndUpdate(userId, {
+      $set: { password: hashedNewPassword },
+    });
+
+
+    return res.status(200).json({
+      success: true,
+      message: "Password updated successfully",
+    });
+
+} catch (error) {
+    res.status(500).json({
+        success: false,
+        message: error.message
+    })
+}
+}
 
 
 
@@ -137,5 +192,8 @@ try {
 
 
 
+module.exports = {createUser, loginUser, allUsers, updatePassword}
 
-module.exports = {createUser, loginUser, allUsers}
+
+
+

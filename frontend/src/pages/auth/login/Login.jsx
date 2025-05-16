@@ -26,8 +26,9 @@ const Login = () => {
         },
         body:JSON.stringify(user)
       })
+      const result = await response.json();
+      
       if(response.ok){
-        const result = await response.json();
         const userRole = result.data.role
         dispatch(setAuth({token: result.data.token, user: result.data}));
         toast.success(result.message)
@@ -37,7 +38,11 @@ const Login = () => {
         }else{
           navigate('/')
         }
+      }else{
+        toast.error(result.message)
       }
+      
+      
     } catch (error) {
       console.log("Login", error)
       
@@ -89,6 +94,11 @@ const Login = () => {
         Don't have an account?{' '}
           <Link to="/signup" className="text-purple-700 hover:underline font-medium">
             Signup
+          </Link>
+        </p>
+        <p className="mt-4 text-sm text-center text-gray-600">
+          <Link to="/update-password" className="text-purple-700 hover:underline font-medium">
+            Forgot Password
           </Link>
         </p>
       </div>

@@ -31,6 +31,8 @@ const storage = multer.diskStorage({
   userRoute.post('/login', userController.loginUser)
   // get all users
   userRoute.get('/users',auth, userController.allUsers)
+  // route for update password
+  userRoute.post('/update-password',auth, userController.updatePassword)
 
 
 
