@@ -9,6 +9,7 @@ import Home from './pages/home/Home'
 import Logout from './pages/auth/logout/Logout'
 import User from './pages/dashboard/User'
 import Overview from './pages/dashboard/Overview'
+import UpdatePassword from './pages/auth/update-passwod/UpdatePassword'
 
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>} />
         <Route path='/logout' element={<Logout/>} />
+        <Route path='/update-password' element={<UpdatePassword/>} />
         <Route path="/dashboard/" element={<Dashboard />}>
           <Route index element={<Overview/>}/>
           <Route path='overview' element={<Overview/>}/>

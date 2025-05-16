@@ -1,5 +1,6 @@
 import React from 'react'
 import { FiHome, FiUsers, FiBarChart2 } from 'react-icons/fi'
+import { RiLockPasswordLine } from "react-icons/ri";
 import { CiLogout } from "react-icons/ci";
 import { NavLink } from 'react-router-dom';
 
@@ -17,6 +18,9 @@ const Sidebar = () => {
         </NavLink>
         <NavLink to="#" className="flex items-center gap-3 text-gray-700 hover:text-purple-700 transition">
           <FiBarChart2 className="text-xl" /> Graphs
+        </NavLink>
+        <NavLink to="/update-password" className="flex items-center gap-3 text-gray-700 hover:text-purple-700 transition">
+          <RiLockPasswordLine className="text-xl" /> Update Password
         </NavLink>
         <NavLink to="/logout" className="flex items-center gap-3 text-gray-700 hover:text-purple-700 transition">
           <CiLogout className="text-xl" /> Logout

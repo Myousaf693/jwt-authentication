@@ -128,6 +128,7 @@ const Signup = () => {
             Login
           </Link>
         </p>
+        
       </div>
     </div>
   )
